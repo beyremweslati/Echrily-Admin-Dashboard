@@ -62,7 +62,7 @@ const Games = () => {
                             style={{
                                 width: "100%",
                                 height: "100%",
-                                objectFit: "contain",
+                                objectFit: "cover",
                                 objectPosition: "center",
                             }}
                         />
@@ -114,6 +114,7 @@ const Games = () => {
                         fontSize: "14px",
                         fontWeight: "bold",
                     },
+
                     "& .MuiDataGrid-columnHeader": {
                         backgroundColor: colors.primary[400],
                         borderBottom: "none",
@@ -131,9 +132,13 @@ const Games = () => {
                     "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
                         color: `${colors.grey[100]} !important`,
                     },
+                    "& .MuiCheckbox-root": {
+                        color: `${colors.blueAccent[500]} !important`
+                    }
                 }}
             >
                 <DataGrid
+                checkboxSelection
                     rows={games}
                     columns={columns}
                     rowHeight={130}

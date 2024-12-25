@@ -45,10 +45,10 @@ const Sidebar =  () => {
                     padding: "5px 35px 5px 20px !important",
                 },
                 "& .pro-inner-item:hover": {
-                    color:"#21B5DC !important"
+                    color:`${colors.blueAccent[500]} !important`
                 },
                 "& .pro-menu-item.active": {
-                    color: "#21B5DC !important" 
+                    color: `${colors.blueAccent[500]} !important` 
                 }
             }}
         >
@@ -118,7 +118,7 @@ const Sidebar =  () => {
                         />
                         <Typography
                             variant="h6"
-                            color={colors.grey[300]}
+                            color={colors.primary[300]}
                             sx={{ m: "15px 0 5px 20px" }}
                         >
                             Charts
