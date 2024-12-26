@@ -11,7 +11,7 @@ const Games = () => {
     const [games, setGames] = useState([]);
 
     useEffect(() => {
-        const fetchGames = async () => {
+        const fetchGames = async () => {    
             try {
                 const response = await axios.get("https://echrily.shop/api/games");
                 setGames(response.data);
@@ -113,6 +113,7 @@ const Games = () => {
                         color: colors.blueAccent[500],
                         fontSize: "14px",
                         fontWeight: "bold",
+                        flexShrink:"1"
                     },
 
                     "& .MuiDataGrid-columnHeader": {
