@@ -6,6 +6,7 @@ import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Games from "./scenes/games";
 import Orders from "./scenes/orders";
+import Bar from "./scenes/bar";
 function App() {
   const [theme, colorMode] = useMode();
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/manage-games" element={<Games />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/bar" element={<Bar />} />
           </Routes>
         </main>
       </div>
