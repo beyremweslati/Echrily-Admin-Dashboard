@@ -2,32 +2,32 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useState, useEffect } from "react";
+import { styled } from '@mui/material/styles';
 import axios from "axios";
 import Header from "../../components/Header";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import InfoIcon from '@mui/icons-material/Info';
 import DoneIcon from '@mui/icons-material/Done';
 import Chip from '@mui/material/Chip';
-import { styled } from '@mui/material/styles';
 import React from 'react';
-const Orders = ({ orders }) => {
+const Orders = () => {
 
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    // const [games, setGames] = useState([]);
+    const [orders, setOrders] = useState([]);
 
-    // useEffect(() => {
-    //     const fetchGames = async () => {    
-    //         try {
-    //             const response = await axios.get("https://echrily.shop/api/games");
-    //             setGames(response.data);
-    //         } catch (err) {
-    //             console.error("Failed to fetch games");
-    //         }
-    //     };
+    useEffect(() => {
+        const fetchOrders = async () => {    
+            try {
+                const response = await axios.get("https://echrily.shop/api/orders");
+                setOrders(response.data);
+            } catch (err) {
+                console.error("Failed to fetch orders");
+            }
+        };
 
-    //     fetchGames();
-    // }, []);
+        fetchOrders();
+    }, []);
     const StyledChip = styled(Chip)(({ theme }) => ({
         justifyContent: 'left',
         '& .icon': {
@@ -75,7 +75,7 @@ const Orders = ({ orders }) => {
         {
             field: "name",
             headerName: "Name",
-            cellClassName: "name-column--cell",
+            cellClassName: "highlighted-column--cell",
             flex: 0.5,
         },
 
@@ -93,7 +93,7 @@ const Orders = ({ orders }) => {
             align: "left",
         },
         {
-            flex: 1,
+            flex: 0.5,
             field: "status",
             headerName: "Status",
             renderCell: ({ row: { status } }) => {
@@ -114,14 +114,15 @@ const Orders = ({ orders }) => {
                 return (
                     <Box
                         display="flex"
+                        overflow="scroll"
                         flexDirection="column"
                         height="100%"
-                        justifyContent="space-around"
+                        justifyContent="center"
                     >
                         {items.map((item, index) => {
                             return (
-                                <Box key={index}>
-                                    <Typography variant="h6">{item.name} | Qte:{item.quantity} | Price: {item.price}TND</Typography>
+                                <Box key={index} >
+                                    <Typography variant="h6">{item.name} | Qte: {item.quantity}{item.currency} | Price: {item.price}TND</Typography>
                                 </Box>
                             )
                         })}
@@ -129,6 +130,21 @@ const Orders = ({ orders }) => {
                 );
             },
         },
+        {
+            field:"totalAmount",
+            headerName:"Total",
+            type: "number",
+            headerAlign: "left",
+            align: "left",
+            cellClassName: "highlighted-column--cell",
+            renderCell: ({row: {totalAmount}} ) =>{
+                return(
+                    <Box>
+                        {totalAmount}TND
+                    </Box>
+                )
+            }
+        }
 
     ];
 
@@ -145,7 +161,7 @@ const Orders = ({ orders }) => {
                     "& .MuiDataGrid-cell": {
                         borderBottom: "none",
                     },
-                    "& .name-column--cell": {
+                    "& .highlighted-column--cell": {
                         color: colors.blueAccent[500],
                         fontSize: "14px",
                         fontWeight: "bold",
