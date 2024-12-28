@@ -1,23 +1,9 @@
 import { Box } from "@mui/material";
 import Header from "../../components/Header";
 import BarChart from "../../components/BarChart";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import useFetchData from "../../hooks/useFetchData";
 const Bar = () => {
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        const fetchSalesData = async () => {
-            try {
-                const response = await axios.get("https://echrily.shop/api/sales");
-                setData(response.data);
-            } catch (error) {
-                console.error("Error fetching sales data:", error);
-            }
-        };
-
-        fetchSalesData();
-    }, []);
+    const { data } = useFetchData("https://echrily.shop/api/sales");
 
     return (
         <Box m="20px">

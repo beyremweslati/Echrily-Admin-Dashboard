@@ -1,33 +1,21 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { useState, useEffect } from "react";
 import { styled } from '@mui/material/styles';
-import axios from "axios";
+import useFetchData from "../../hooks/useFetchData";
 import Header from "../../components/Header";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import InfoIcon from '@mui/icons-material/Info';
 import DoneIcon from '@mui/icons-material/Done';
 import Chip from '@mui/material/Chip';
 import React from 'react';
+
 const Orders = () => {
 
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [orders, setOrders] = useState([]);
+    const { data: orders } = useFetchData("https://echrily.shop/api/orders");
 
-    useEffect(() => {
-        const fetchOrders = async () => {    
-            try {
-                const response = await axios.get("https://echrily.shop/api/orders");
-                setOrders(response.data);
-            } catch (err) {
-                console.error("Failed to fetch orders");
-            }
-        };
-
-        fetchOrders();
-    }, []);
     const StyledChip = styled(Chip)(({ theme }) => ({
         justifyContent: 'left',
         '& .icon': {

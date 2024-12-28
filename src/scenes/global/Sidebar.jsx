@@ -9,6 +9,7 @@ import SportsEsportsOutlinedIcon from '@mui/icons-material/SportsEsportsOutlined
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined';
+import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 
 const Item = ({title,to,icon,selected,setSelected}) =>{
@@ -127,6 +128,13 @@ const Sidebar =  () => {
                             title="Bar Chart"
                             to="/bar"
                             icon={<BarChartOutlinedIcon />}
+                            selected = {selected}
+                            setSelected = {setSelected}
+                        />
+                        <Item 
+                            title="Pie Chart"
+                            to="/pie"
+                            icon={<PieChartOutlineOutlinedIcon />}
                             selected = {selected}
                             setSelected = {setSelected}
                         />

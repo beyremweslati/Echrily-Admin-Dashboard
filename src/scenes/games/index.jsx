@@ -1,27 +1,13 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import useFetchData from "../../hooks/useFetchData";
 import Header from "../../components/Header";
 
 const Games = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [games, setGames] = useState([]);
-
-    useEffect(() => {
-        const fetchGames = async () => {    
-            try {
-                const response = await axios.get("https://echrily.shop/api/games");
-                setGames(response.data);
-            } catch (err) {
-                console.error("Failed to fetch games");
-            }
-        };
-
-        fetchGames();
-    }, []);
+    const { data: games } = useFetchData("https://echrily.shop/api/games");
 
     const columns = [
         { field: "id", headerName: "ID" },

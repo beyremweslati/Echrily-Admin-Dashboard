@@ -7,7 +7,6 @@ import { Box } from "@mui/material";
 const BarChart = ({ isDashboard = false , data, keyName, currency= "", legendY,legendX}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    
 
     return (
         <ResponsiveBar
@@ -90,19 +89,19 @@ const BarChart = ({ isDashboard = false , data, keyName, currency= "", legendY,l
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: legendX,
+            legend: isDashboard ? undefined : legendX,
             legendPosition: 'middle',
             legendOffset: 40,
-            truncateTickAt: 15,
+            truncateTickAt: 5,
         }}
         axisLeft={{
             tickSize: 5,
             tickPadding: 5,
             tickRotation: -45,
-            legend: legendY,
+            legend: isDashboard ? undefined : legendY,
             legendPosition: 'middle',
             legendOffset: -53,
-            format: (value) => `${value} ${currency}`,  // Add currency here directly using format
+            format: (value) => `${value} ${currency}`,
             truncateTickAt: 0
         }}
         enableLabel={false}
@@ -118,7 +117,7 @@ const BarChart = ({ isDashboard = false , data, keyName, currency= "", legendY,l
                 ]
             ]
         }}
-        legends={[
+        legends={isDashboard ? undefined : [
             {
                 dataFrom: 'keys',
                 anchor: 'bottom-right',

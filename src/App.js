@@ -7,6 +7,7 @@ import Sidebar from "./scenes/global/Sidebar";
 import Games from "./scenes/games";
 import Orders from "./scenes/orders";
 import Bar from "./scenes/bar";
+import Pie from "./scenes/pie";
 function App() {
   const [theme, colorMode] = useMode();
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/manage-games" element={<Games />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/bar" element={<Bar />} />
+            <Route path="/pie" element={<Pie />} />
           </Routes>
         </main>
       </div>
