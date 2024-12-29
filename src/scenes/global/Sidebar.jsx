@@ -28,16 +28,16 @@ const Item = ({title,to,icon,selected,setSelected}) =>{
     )
 }
 
-const Sidebar =  () => {
+const Sidebar =  ({ toggleSidebar, isCollapsed }) => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode);
-    const [isCollapsed, setIsCollapsed] = useState(false);
     const [selected, setSelected] = useState("Dashboard");
     return (
-        <Box 
-            sx={{
+        <Box
+            sx={
+                {
                 "& .pro-sidebar-inner": {
-                    background: `${colors.primary[500]} !important`
+                    background: `${colors.primary[500]} !important`,
                 },
                 "& .pro-icon-wrapper": {
                     backgroundColor: "transparent !important"
@@ -53,9 +53,9 @@ const Sidebar =  () => {
                 }
             }}
         >
-            <ProSidebar collapsed={isCollapsed}>
+            <ProSidebar collapsed={isCollapsed} style={{position:"fixed"}}>
                 <Menu iconShape="square">
-                    <MenuItem onClick={() => setIsCollapsed(!isCollapsed)}
+                    <MenuItem onClick={toggleSidebar}
                         icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
                         style={{
                             margin:"10px 0 20px 0",
@@ -65,7 +65,7 @@ const Sidebar =  () => {
                         {!isCollapsed && (
                             <Box display="flex" justifyContent="space-between" alignItems="center" ml="15px"> 
                                 <Typography variant="h3" color={colors.grey[100]} >Admins</Typography>
-                                <IconButton onClick={() => setIsCollapsed(!isCollapsed)}><MenuOutlinedIcon /></IconButton>
+                                <IconButton onClick={toggleSidebar}><MenuOutlinedIcon /></IconButton>
                             </Box>
                         )}
                     </MenuItem>
@@ -153,4 +153,4 @@ const Sidebar =  () => {
     );
 }
 
-export default Sidebar;
+export default Sidebar; 

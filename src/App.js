@@ -1,5 +1,6 @@
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider} from "@mui/material";
+import {Box} from "@mui/material";
 import {Routes, Route} from "react-router-dom";
 import Dashboard from "./scenes/dashboard";
 import Topbar from "./scenes/global/Topbar";
@@ -8,14 +9,24 @@ import Games from "./scenes/games";
 import Orders from "./scenes/orders";
 import Bar from "./scenes/bar";
 import Pie from "./scenes/pie";
+import { useState } from "react";
 function App() {
   const [theme, colorMode] = useMode();
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  
+  const toggleSidebar = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
       <div className="app">
-        <Sidebar />
+        <Box display="flex" width={isCollapsed ? "80px" : "270px"} flexShrink="0" sx={{transition:"width 0.3s"}}>
+          <Sidebar toggleSidebar={toggleSidebar} isCollapsed={isCollapsed}/>
+        </Box>
         <main className="content">
           <Topbar />
           <Routes>

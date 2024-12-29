@@ -10,13 +10,12 @@ const Pie = () => {
     useEffect(() => {
         const calculateRevenueShare = () => {
             if(orders.length !== 0){
-                console.log(orders);
                 const platformRevenue = {};
                 var totalRevenue = 0;
                 
                 orders.forEach(order => {
                     order.items.forEach(item => {
-                        const platform = item.platform;
+                        const platform = item.shop;
                         const price = item.price;
 
                         if(!platformRevenue[platform]){
@@ -28,8 +27,8 @@ const Pie = () => {
                 })
                 const data = Object.entries(platformRevenue).map(([platform, revenue]) => ({
                     id: platform,
-                    value: revenue,
-                    percentage: ((revenue / totalRevenue) * 100).toFixed(2),
+                    label: platform,
+                    value: (revenue / totalRevenue),
                 }))
                 setPieData(data);
                 }
@@ -37,13 +36,13 @@ const Pie = () => {
         }
 
         calculateRevenueShare();
-    }, [orders])
 
+    }, [orders])
     return ( 
         <Box m="20px">
             <Header title="Pie Chart" subtitle="Simple Pie Chart" />
             <Box height="75vh" display="flex" width="100%">
-                {/* <PieChart data={pieData} /> */}
+                <PieChart data={pieData} />
             </Box>
         </Box>
     );
