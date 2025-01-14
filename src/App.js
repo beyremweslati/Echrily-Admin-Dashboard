@@ -9,6 +9,7 @@ import Games from "./scenes/games";
 import Orders from "./scenes/orders";
 import Bar from "./scenes/bar";
 import Pie from "./scenes/pie";
+import Line from "./scenes/line";
 import { useState } from "react";
 function App() {
   const [theme, colorMode] = useMode();
@@ -35,6 +36,7 @@ function App() {
             <Route path="/orders" element={<Orders />} />
             <Route path="/bar" element={<Bar />} />
             <Route path="/pie" element={<Pie />} />
+            <Route path="/line" element={<Line />} />
           </Routes>
         </main>
       </div>

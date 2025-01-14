@@ -1,7 +1,6 @@
 import { useTheme } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { tokens } from "../theme";
-import { Box } from "@mui/material";
 
 
 const BarChart = ({ isDashboard = false , data, keyName, currency= "", legendY,legendX}) => {
@@ -95,6 +94,7 @@ const BarChart = ({ isDashboard = false , data, keyName, currency= "", legendY,l
             truncateTickAt: 5,
         }}
         axisLeft={{
+            tickValues: 6,
             tickSize: 5,
             tickPadding: 5,
             tickRotation: -45,
