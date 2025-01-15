@@ -8,7 +8,7 @@ const Line = () => {
     const { data: dailyOrders } = useFetchData("https://echrily.shop/api/sales/daily");
 
     const [lineData, setLineData] = useState([]);
-    console.log(dailyOrders);
+
     useEffect(() => {
         if (dailyOrders.length !== 0) {
             const data = dailyOrders.map(order => ({
