@@ -5,7 +5,7 @@ const ProgressCirlce = ({progress = "0.75", size="40"}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const angle = Math.abs(progress) * 360;
-    const progressColor = progress >= 0 ? colors.blueAccent[500] : colors.redAccent[500];
+    const progressColor = progress >= 0 ? colors.greenAccent[500] : colors.redAccent[500];
 
     return ( 
         <Box

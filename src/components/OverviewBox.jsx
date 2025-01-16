@@ -9,11 +9,11 @@ const OverviewBox = ({ title, subtitle, detail,icon}) => {
     return (
         <Box width="100%" m="0 30px" >
             <Box display="flex" justifyContent="space-between">
-                <Box width="100%" display="flex" justifyContent="space-between">
+                <Box>
+                    {icon}
                     <Typography variant="h4" fontWeight="bold" sx={{ color: colors.grey[100] }}>
                         {title}
                     </Typography>
-                    {icon}
                 </Box>
             </Box>
             <Box display="flex" justifyContent="space-between" flexDirection="column">
