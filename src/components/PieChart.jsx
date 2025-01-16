@@ -1,4 +1,4 @@
-import { useTheme } from "@mui/material";
+import { useTheme, useMediaQuery } from "@mui/material";
 import { tokens } from "../theme";
 import { ResponsivePie } from "@nivo/pie";
 
@@ -65,31 +65,59 @@ const PieChart = ({ isDashboard = false, data }) => {
         from: "color",
         modifiers: [["darker", 2]],
       }}
-      legends={[
-        {
-          anchor: "bottom",
-          direction: "row",
-          justify: false,
-          translateX: 0,
-          translateY: 56,
-          itemsSpacing: 0,
-          itemWidth: 100,
-          itemHeight: 18,
-          itemTextColor: colors.grey[400],
-          itemDirection: "left-to-right",
-          itemOpacity: 1,
-          symbolSize: 18,
-          symbolShape: "circle",
-          effects: [
-            {
-              on: "hover",
-              style: {
-                itemTextColor: colors.grey[100],
+      legends={
+        useMediaQuery(theme.breakpoints.down("lg"))
+          ? [
+              {
+                anchor: "bottom",
+                direction: "column",
+                justify: false,
+                translateX: -35,
+                translateY: 60,
+                itemsSpacing: 0,
+                itemWidth: 100,
+                itemHeight: 18,
+                itemTextColor: colors.grey[400],
+                itemDirection: "left-to-right",
+                itemOpacity: 1,
+                symbolSize: 10,
+                symbolShape: "circle",
+                effects: [
+                  {
+                    on: "hover",
+                    style: {
+                      itemTextColor: colors.grey[100],
+                    },
+                  },
+                ],
               },
-            },
-          ],
-        },
-      ]}
+            ]
+          : [
+              {
+                anchor: "bottom",
+                direction: "row",
+                justify: false,
+                translateX: 20,
+                translateY: 56,
+                itemsSpacing: 5,
+                itemWidth: 100,
+                itemHeight: 18,
+                itemTextColor: colors.grey[400],
+                itemDirection: "left-to-right",
+                itemOpacity: 1,
+                symbolSize: 18,
+                symbolShape: "circle",
+                effects: [
+                  {
+                    on: "hover",
+                    style: {
+                      itemTextColor: colors.grey[100],
+                    },
+                  },
+                ],
+              },
+            ]
+      }
     />
   );
 };

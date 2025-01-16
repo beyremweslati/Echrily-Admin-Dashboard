@@ -62,7 +62,22 @@ const Dashboard = () => {
 
   return (
     <Box m="20px">
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems={{
+          xs: "flex-start",
+          sm: "center",
+        }}
+        flexDirection={{
+          xs: "column",
+          sm: "row",
+        }}
+        mb={{
+          xs: "20px",
+          sm: "0",
+        }}
+      >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
 
         <Box>
@@ -84,12 +99,20 @@ const Dashboard = () => {
       {/* Row 1 */}
       <Box
         display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
+        gridTemplateColumns={{
+          xs: "repeat(1, 1fr)",
+          sm: "repeat(8, 1fr)",
+          md: "repeat(12, 1fr)",
+        }}
         gridAutoRows="140px"
         gap="20px"
       >
         <Box
-          gridColumn="span 3"
+          gridColumn={{
+            xs: "span 8",
+            sm: "span 4",
+            md: "span 3",
+          }}
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -109,7 +132,11 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 3"
+          gridColumn={{
+            xs: "span 8",
+            sm: "span 4",
+            md: "span 3",
+          }}
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -130,7 +157,11 @@ const Dashboard = () => {
         </Box>
 
         <Box
-          gridColumn="span 3"
+          gridColumn={{
+            xs: "span 8",
+            sm: "span 4",
+            md: "span 3",
+          }}
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -152,7 +183,11 @@ const Dashboard = () => {
         </Box>
 
         <Box
-          gridColumn="span 3"
+          gridColumn={{
+            xs: "span 8",
+            sm: "span 4",
+            md: "span 3",
+          }}
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -213,7 +248,11 @@ const Dashboard = () => {
         </Box>
 
         <Box
-          gridColumn="span 4"
+          gridColumn={{
+            xs: "span 8",
+            sm: "span 8",
+            md: "span 4",
+          }}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           overflow="auto"
@@ -232,11 +271,19 @@ const Dashboard = () => {
           </Box>
           {completedOrders.map((order, i) => (
             <Box
-              key={`${order.orderId}`}
+              key={`${order.orderId}-${i}`}
               display="flex"
               justifyContent="space-between"
+              textAlign={{
+                xs: "center",
+                sm: "start",
+              }}
+              flexDirection={{
+                xs: "column",
+                sm: "row",
+              }}
               alignItems="center"
-              borderBottom={`4px solid ${colors.primary[400]}`}
+              borderBottom={`4px solid ${colors.primary[500]}`}
               p="15px"
             >
               <Box>
@@ -250,13 +297,16 @@ const Dashboard = () => {
                 <Typography color={colors.grey[100]}>{order.name}</Typography>
               </Box>
               <Box color={colors.grey[100]}>
-                {" "}
                 {new Date(order.createdAt).toLocaleDateString("fr-FR")}
               </Box>
               <Box
                 backgroundColor={colors.blueAccent[500]}
                 p="5px 10px"
                 borderRadius="4px"
+                mt={{
+                  xs: "10px",
+                  sm: "0",
+                }}
               >
                 {order.totalAmount}TND
               </Box>
@@ -265,7 +315,11 @@ const Dashboard = () => {
         </Box>
         {/* Row 3 */}
         <Box
-          gridColumn="span 7"
+          gridColumn={{
+            xs: "span 8",
+            sm: "span 8",
+            md: "span 7",
+          }}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           p="30px"
@@ -290,7 +344,11 @@ const Dashboard = () => {
           </Box>
         </Box>
         <Box
-          gridColumn="span 5"
+          gridColumn={{
+            xs: "span 8",
+            sm: "span 8",
+            md: "span 5",
+          }}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           p="30px"

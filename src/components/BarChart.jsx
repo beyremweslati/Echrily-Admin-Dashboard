@@ -1,4 +1,4 @@
-import { useTheme } from "@mui/material";
+import { useTheme, useMediaQuery } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { tokens } from "../theme";
 
@@ -83,15 +83,19 @@ const BarChart = ({
       }}
       axisTop={null}
       axisRight={null}
-      axisBottom={{
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: isDashboard ? undefined : legendX,
-        legendPosition: "middle",
-        legendOffset: 40,
-        truncateTickAt: 5,
-      }}
+      axisBottom={
+        useMediaQuery(theme.breakpoints.down("sm"))
+          ? null
+          : {
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: isDashboard ? undefined : legendX,
+              legendPosition: "middle",
+              legendOffset: 40,
+              truncateTickAt: 5,
+            }
+      }
       axisLeft={{
         tickValues: 6,
         tickSize: 5,

@@ -13,7 +13,7 @@ import Line from "./scenes/line";
 import { useState } from "react";
 function App() {
   const [theme, colorMode] = useMode();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
