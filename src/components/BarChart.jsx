@@ -52,7 +52,7 @@ const BarChart = ({
       }}
       keys={[keyName]}
       indexBy="gameName"
-      margin={{ top: 20, right: 10, bottom: 30, left: 50 }}
+      margin={{ top: 20, right: 10, bottom: 30, left: 60 }}
       padding={0.3}
       valueScale={{ type: "linear" }}
       indexScale={{ type: "band", round: true }}

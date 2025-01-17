@@ -42,6 +42,11 @@ const LineChart = ({ data, isDashboard = false }) => {
             color: colors.grey[100],
           },
         },
+        crosshair: {
+          line: {
+            stroke: colors.primary[100],
+          },
+        },
       }}
       enableGridX={false}
       enableGridY={false}

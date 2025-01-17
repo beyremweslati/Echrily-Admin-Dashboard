@@ -1,8 +1,19 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Typography,
+  useTheme,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { styled } from "@mui/material/styles";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import useFetchData from "../../hooks/useFetchData";
 import Header from "../../components/Header";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
@@ -10,11 +21,56 @@ import InfoIcon from "@mui/icons-material/Info";
 import DoneIcon from "@mui/icons-material/Done";
 import Chip from "@mui/material/Chip";
 import React from "react";
-
+import axios from "axios";
 const Orders = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const { data: orders } = useFetchData("https://echrily.shop/api/orders");
+  const { data: orders, setData: setOrders } = useFetchData(
+    "https://echrily.shop/api/orders"
+  );
+  const [selectedOrders, setSelectedOrders] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [newStatus, setNewStatus] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const updateStatusForSelected = (status) => {
+    const updatedOrders = orders.map((order) =>
+      selectedOrders.includes(order.orderId)
+        ? { ...order, status: status }
+        : order
+    );
+    setOrders(updatedOrders);
+    setSelectedOrders([]);
+
+    selectedOrders.forEach(async (orderId) => {
+      try {
+        const response = await axios.post(
+          `https://echrily.shop/api/orders/${orderId}`,
+          {
+            status: status,
+          }
+        );
+        if (response) {
+          console.log("Order Updated");
+        }
+      } catch (error) {
+        console.error("Failed to update order :", error);
+      }
+    });
+    setOpenSnackbar(true);
+  };
+
+  const handleConfirm = (status) => {
+    setNewStatus(status);
+    setOpenDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
+  const handleDialogConfirm = () => {
+    updateStatusForSelected(newStatus);
+    handleDialogClose();
+  };
 
   const StyledChip = styled(Chip)(({ theme }) => ({
     justifyContent: "left",
@@ -137,54 +193,128 @@ const Orders = () => {
   return (
     <Box m="20px">
       <Header title="Orders" subtitle="Managing Orders" />
-      <Box
-        m="40px 0 0 0 "
-        height="75vh"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-          },
-          "& .highlighted-column--cell": {
-            color: colors.blueAccent[500],
-            fontSize: "14px",
-            fontWeight: "bold",
-            flexShrink: "1",
-          },
-
-          "& .MuiDataGrid-columnHeader": {
-            backgroundColor: colors.primary[400],
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor:
-              theme.palette.mode === "dark"
-                ? colors.primary[700]
-                : colors.grey[900],
-          },
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "none",
-            backgroundColor: colors.primary[400],
-          },
-          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${colors.grey[100]} !important`,
-          },
-          "& .MuiCheckbox-root": {
-            color: `${colors.blueAccent[500]} !important`,
-          },
+      <Box display="flex" flexDirection="column" gap="10px">
+        <Box
+          height="75vh"
+          sx={{
+            "& .MuiDataGrid-root": {
+              border: "none",
+            },
+            "& .MuiDataGrid-cell": {
+              borderBottom: "none",
+            },
+            "& .highlighted-column--cell": {
+              color: colors.blueAccent[500],
+              fontSize: "14px",
+              fontWeight: "bold",
+              flexShrink: "1",
+            },
+            "& .non-selectable-row": {
+              "& .MuiCheckbox-root": {
+                color: ` ${colors.grey[500]} !important`,
+              },
+            },
+            "& .selectable-row": {
+              backgroundColor: "inherit",
+              "& .MuiCheckbox-root": {
+                color: `${colors.blueAccent[500]} !important`,
+              },
+            },
+            "& .MuiDataGrid-columnHeader": {
+              backgroundColor: colors.primary[400],
+              borderBottom: "none",
+              "& .MuiCheckbox-root": {
+                color: `${colors.blueAccent[500]} !important`,
+              },
+            },
+            "& .MuiDataGrid-virtualScroller": {
+              backgroundColor:
+                theme.palette.mode === "dark"
+                  ? colors.primary[700]
+                  : colors.grey[900],
+            },
+            "& .MuiDataGrid-footerContainer": {
+              borderTop: "none",
+              backgroundColor: colors.primary[400],
+            },
+            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+              color: `${colors.grey[100]} !important`,
+            },
+          }}
+        >
+          <DataGrid
+            checkboxSelection
+            getRowId={(row) => row.orderId}
+            onRowSelectionModelChange={(ids) => setSelectedOrders(ids)}
+            isRowSelectable={(params) => params.row.status === "Pending"}
+            rowSelectionModel={selectedOrders}
+            getRowClassName={(params) =>
+              params.row.status === "Pending"
+                ? "selectable-row"
+                : "non-selectable-row"
+            }
+            rows={orders}
+            columns={columns}
+            rowHeight={100}
+            slots={{ toolbar: GridToolbar }}
+          />
+        </Box>
+        <Box display="flex" justifyContent="flex-end" gap="20px">
+          <Button
+            variant="contained"
+            color="success"
+            size="large"
+            onClick={() => handleConfirm("Completed")}
+            disabled={selectedOrders.length === 0}
+          >
+            Mark as Completed
+          </Button>
+          <Button
+            variant="contained"
+            size="large"
+            color="error"
+            onClick={() => handleConfirm("Cancelled")}
+            disabled={selectedOrders.length === 0}
+          >
+            Mark as Cancelled
+          </Button>
+        </Box>
+      </Box>
+      <Dialog open={openDialog} onClose={handleDialogClose}>
+        <DialogTitle>Confirm Status Change</DialogTitle>
+        <DialogContent>
+          <p>
+            Are you sure you want to update the status of the selected orders to
+            "{newStatus}"?
+          </p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color={colors.primary[500]}>
+            Cancel
+          </Button>
+          <Button onClick={handleDialogConfirm} color={colors.primary[500]}>
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
         }}
       >
-        <DataGrid
-          checkboxSelection
-          getRowId={(row) => row.orderId}
-          rows={orders}
-          columns={columns}
-          rowHeight={130}
-          slots={{ toolbar: GridToolbar }}
-        />
-      </Box>
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity="success"
+          variant="outlined"
+          sx={{ width: "100%" }}
+        >
+          Order status updated successfully
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
