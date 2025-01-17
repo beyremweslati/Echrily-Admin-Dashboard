@@ -25,23 +25,24 @@ import axios from "axios";
 const Orders = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const { data: orders, setData: setOrders } = useFetchData(
+  const { data: orders, fetchData: refetchOrders } = useFetchData(
     "https://echrily.shop/api/orders"
   );
   const [selectedOrders, setSelectedOrders] = useState([]);
+
+  // Confirmation Dialog
   const [openDialog, setOpenDialog] = useState(false);
   const [newStatus, setNewStatus] = useState("");
+
+  // Success/Error message
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const updateStatusForSelected = (status) => {
-    const updatedOrders = orders.map((order) =>
-      selectedOrders.includes(order.orderId)
-        ? { ...order, status: status }
-        : order
-    );
-    setOrders(updatedOrders);
+  const [severity, setSeverity] = useState("success");
+  const [message, setMessage] = useState("");
+
+  const updateStatusForSelected = async (status) => {
     setSelectedOrders([]);
 
-    selectedOrders.forEach(async (orderId) => {
+    const updatePromises = selectedOrders.map(async (orderId) => {
       try {
         const response = await axios.post(
           `https://echrily.shop/api/orders/${orderId}`,
@@ -50,13 +51,26 @@ const Orders = () => {
           }
         );
         if (response) {
-          console.log("Order Updated");
+          console.log(`Order ${orderId} updated successfully`);
         }
       } catch (error) {
-        console.error("Failed to update order :", error);
+        console.error(`Failed to update order ${orderId}:`, error);
+        return "error";
       }
+      return "success";
     });
+
+    // Wait for all promises to resolve
+    const res = await Promise.all(updatePromises);
+    if (res.includes("error")) {
+      setSeverity("error");
+      setMessage("Some orders failed to update");
+    } else {
+      setSeverity("success");
+      setMessage("All orders updated successfully");
+    }
     setOpenSnackbar(true);
+    refetchOrders();
   };
 
   const handleConfirm = (status) => {
@@ -308,11 +322,11 @@ const Orders = () => {
       >
         <Alert
           onClose={() => setOpenSnackbar(false)}
-          severity="success"
+          severity={severity}
           variant="outlined"
           sx={{ width: "100%" }}
         >
-          Order status updated successfully
+          {message}
         </Alert>
       </Snackbar>
     </Box>
