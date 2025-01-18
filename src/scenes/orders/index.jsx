@@ -62,7 +62,6 @@ const Orders = () => {
       return "success";
     });
 
-    // Wait for all promises to resolve
     const res = await Promise.all(updatePromises);
     if (res.includes("error")) {
       setSeverity("error");
