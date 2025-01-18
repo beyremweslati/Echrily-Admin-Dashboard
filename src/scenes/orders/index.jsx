@@ -9,6 +9,7 @@ import {
   DialogTitle,
   Snackbar,
   Alert,
+  useMediaQuery,
 } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
@@ -31,6 +32,7 @@ const Orders = () => {
   const [selectedOrders, setSelectedOrders] = useState([]);
 
   // Confirmation Dialog
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [openDialog, setOpenDialog] = useState(false);
   const [newStatus, setNewStatus] = useState("");
 
@@ -206,7 +208,7 @@ const Orders = () => {
 
   return (
     <Box m="20px">
-      <Header title="Orders" subtitle="Managing Orders" />
+      <Header title="ORDERS" subtitle="Managing Orders" />
       <Box display="flex" flexDirection="column" gap="10px">
         <Box
           height="75vh"
@@ -294,8 +296,14 @@ const Orders = () => {
           </Button>
         </Box>
       </Box>
-      <Dialog open={openDialog} onClose={handleDialogClose}>
-        <DialogTitle>Confirm Status Change</DialogTitle>
+      <Dialog
+        open={openDialog}
+        onClose={handleDialogClose}
+        fullScreen={fullScreen}
+      >
+        <DialogTitle sx={{ color: colors.blueAccent[500] }}>
+          Confirm Change
+        </DialogTitle>
         <DialogContent>
           <p>
             Are you sure you want to update the status of the selected orders to

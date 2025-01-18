@@ -7,6 +7,7 @@ import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Games from "./scenes/games";
 import Orders from "./scenes/orders";
+import AddGames from "./scenes/addGames";
 import Bar from "./scenes/bar";
 import Pie from "./scenes/pie";
 import Line from "./scenes/line";
@@ -38,6 +39,7 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/manage-games" element={<Games />} />
               <Route path="/orders" element={<Orders />} />
+              <Route path="/add-games" element={<AddGames />} />
               <Route path="/bar" element={<Bar />} />
               <Route path="/pie" element={<Pie />} />
               <Route path="/line" element={<Line />} />

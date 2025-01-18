@@ -11,7 +11,7 @@ import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -132,6 +132,20 @@ const Sidebar = ({ toggleSidebar, isCollapsed }) => {
               title="Orders"
               to="/orders"
               icon={<ReceiptOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Typography
+              variant="h6"
+              color={colors.primary[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Forms
+            </Typography>
+            <Item
+              title="Add Games"
+              to="/add-games"
+              icon={<AddCircleOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
