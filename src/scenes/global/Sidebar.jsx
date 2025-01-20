@@ -135,13 +135,6 @@ const Sidebar = ({ toggleSidebar, isCollapsed }) => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Typography
-              variant="h6"
-              color={colors.primary[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Forms
-            </Typography>
             <Item
               title="Add Games"
               to="/add-games"

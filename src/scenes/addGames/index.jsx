@@ -34,9 +34,8 @@ const AddGames = () => {
         params: {
           search: searchTerm,
           key: rawgKey,
-          ordering: "-metacritic",
           page: 1,
-          page_size: 6,
+          page_size: 15,
         },
       });
       setGames(response.data.results);

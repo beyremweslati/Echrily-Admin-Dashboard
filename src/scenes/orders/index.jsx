@@ -42,8 +42,6 @@ const Orders = () => {
   const [message, setMessage] = useState("");
 
   const updateStatusForSelected = async (status) => {
-    setSelectedOrders([]);
-
     const updatePromises = selectedOrders.map(async (orderId) => {
       try {
         const response = await axios.post(
@@ -70,6 +68,7 @@ const Orders = () => {
       setSeverity("success");
       setMessage("All orders updated successfully");
     }
+    setSelectedOrders([]);
     setOpenSnackbar(true);
     refetchOrders();
   };
