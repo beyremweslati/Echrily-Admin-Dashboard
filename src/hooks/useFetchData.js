@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
-const useFetchData = (url) => {
+const useFetchData = (url, config = {}) => {
   const [data, setData] = useState([]);
 
   const fetchData = useCallback(async () => {

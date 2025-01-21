@@ -30,15 +30,12 @@ const AddGames = () => {
   const ITADKey = process.env.REACT_APP_ITA_API_KEY;
   const fetchGames = async () => {
     try {
-      const response = await axios.get("https://api.rawg.io/api/games", {
+      const response = await axios.get("/api/admin/rawgGames", {
         params: {
-          search: searchTerm,
-          key: rawgKey,
-          page: 1,
-          page_size: 15,
+          searchTerm: searchTerm,
         },
       });
-      setGames(response.data.results);
+      setGames(response.data);
     } catch (error) {
       console.error("Error fetching games:", error);
     }
@@ -64,15 +61,11 @@ const AddGames = () => {
       const finalGames = await Promise.all(
         selectedGamesObjects.map(async (game) => {
           try {
-            const isadResponse = await axios.get(
-              "https://api.isthereanydeal.com/games/lookup/v1",
-              {
-                params: {
-                  key: ITADKey,
-                  title: game.name,
-                },
-              }
-            );
+            const isadResponse = await axios.get("/api/admin/isad-lookup", {
+              params: {
+                gameName: game.name,
+              },
+            });
             const isadID = isadResponse.data.found
               ? isadResponse.data.game.id
               : null;
@@ -91,7 +84,7 @@ const AddGames = () => {
           }
         })
       );
-      const res = await axios.post("https://echrily.shop/api/games/add", {
+      const res = await axios.post("/api/admin/add-games", {
         games: finalGames,
       });
       if (res.status === 201) {

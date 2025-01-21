@@ -3,7 +3,7 @@ import Header from "../../components/Header";
 import BarChart from "../../components/BarChart";
 import useFetchData from "../../hooks/useFetchData";
 const Bar = () => {
-  const { data } = useFetchData("https://echrily.shop/api/sales");
+  const { data } = useFetchData("api/admin/sales");
 
   return (
     <Box m="20px">

@@ -26,9 +26,8 @@ import axios from "axios";
 const Orders = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const { data: orders, fetchData: refetchOrders } = useFetchData(
-    "https://echrily.shop/api/orders"
-  );
+  const { data: orders, fetchData: refetchOrders } =
+    useFetchData("/api/admin/orders");
   const [selectedOrders, setSelectedOrders] = useState([]);
 
   // Confirmation Dialog
@@ -44,20 +43,21 @@ const Orders = () => {
   const updateStatusForSelected = async (status) => {
     const updatePromises = selectedOrders.map(async (orderId) => {
       try {
-        const response = await axios.post(
-          `https://echrily.shop/api/orders/${orderId}`,
-          {
-            status: status,
-          }
-        );
-        if (response) {
-          console.log(`Order ${orderId} updated successfully`);
+        const response = await axios.post(`/api/admin/orders/${orderId}`, {
+          status: status,
+        });
+        if (response.status === 200) {
+          return "success";
+        } else {
+          console.log(
+            `Failed to update order ${orderId}: ${response.data.message}`
+          );
+          return "error";
         }
       } catch (error) {
         console.error(`Failed to update order ${orderId}:`, error);
         return "error";
       }
-      return "success";
     });
 
     const res = await Promise.all(updatePromises);

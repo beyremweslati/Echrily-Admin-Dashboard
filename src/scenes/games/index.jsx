@@ -31,10 +31,10 @@ const Games = () => {
     const updatePromises = selectedGames.map(async (game) => {
       try {
         const res = await axios.patch(
-          `https://echrily.shop/api/games/${game}/toggle-visibility`
+          `/api/admin/games/${game}/toggle-visibility`
         );
       } catch (error) {
-        console.error(`Failed to update order ${game}:`, error);
+        console.error(`Failed to update game ${game}:`, error.message);
         return "error";
       }
       return "success";

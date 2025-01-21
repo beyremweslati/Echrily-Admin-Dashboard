@@ -18,13 +18,13 @@ const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const { data: Orders } = useFetchData("https://echrily.shop/api/orders");
-  const { lineData } = useLineChartData("https://echrily.shop/api/sales/daily");
-  const { data: sales } = useFetchData("https://echrily.shop/api/sales");
-  const { data: games } = useFetchData("https://echrily.shop/api/games");
+  const { data: Orders } = useFetchData("/api/admin/orders");
+  const { lineData } = useLineChartData("/api/admin/sales/daily");
+  const { data: sales } = useFetchData("/api/admin/sales");
+  const { data: games } = useFetchData("/api/admin/games");
 
   const { data: monthlyRevenue } = useFetchData(
-    "https://echrily.shop/api/stats/monthly-revenue"
+    "/api/admin/stats/monthly-revenue"
   );
   const [pieData, setPieData] = useState([]);
   useEffect(() => {

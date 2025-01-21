@@ -5,7 +5,7 @@ import useFetchData from "../../hooks/useFetchData";
 import { useEffect, useState } from "react";
 
 const Pie = () => {
-  const { data: orders } = useFetchData("https://echrily.shop/api/orders");
+  const { data: orders } = useFetchData("/api/admin/orders");
   const [pieData, setPieData] = useState([]);
   useEffect(() => {
     const calculateRevenueShare = () => {

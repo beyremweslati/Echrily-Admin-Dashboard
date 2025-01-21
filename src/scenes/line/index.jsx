@@ -4,7 +4,7 @@ import LineChart from "../../components/LineChart";
 import useLineChartData from "../../hooks/useLineChartData";
 
 const Line = () => {
-  const { lineData } = useLineChartData("https://echrily.shop/api/sales/daily");
+  const { lineData } = useLineChartData("/api/admin/sales/daily");
   return (
     <Box m="20px">
       <Header title="CHARTS" subtitle="Line Chart" />
