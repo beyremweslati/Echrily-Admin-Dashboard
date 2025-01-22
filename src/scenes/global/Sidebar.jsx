@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Typography,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -31,6 +37,8 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 const Sidebar = ({ toggleSidebar, isCollapsed }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const isSmallScreen = useMediaQuery("(max-width: 800px)");
+
   const [selected, setSelected] = useState("Dashboard");
   return (
     <Box
@@ -60,6 +68,7 @@ const Sidebar = ({ toggleSidebar, isCollapsed }) => {
             style={{
               margin: "10px 0 20px 0",
               color: colors.grey[100],
+              visibility: isSmallScreen ? "hidden" : "visible",
             }}
           >
             {!isCollapsed && (
@@ -116,7 +125,7 @@ const Sidebar = ({ toggleSidebar, isCollapsed }) => {
             />
             <Typography
               variant="h6"
-              color={colors.primary[300]}
+              color={colors.grey[600]}
               sx={{ m: "15px 0 5px 20px" }}
             >
               Main
@@ -144,7 +153,7 @@ const Sidebar = ({ toggleSidebar, isCollapsed }) => {
             />
             <Typography
               variant="h6"
-              color={colors.primary[300]}
+              color={colors.grey[600]}
               sx={{ m: "15px 0 5px 20px" }}
             >
               Charts

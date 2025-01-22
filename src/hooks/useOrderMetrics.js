@@ -24,6 +24,7 @@ const useOrderMetrics = (orders) => {
       (sum, order) => sum + order.totalAmount,
       0
     );
+    completedOrders.reverse();
     return { completedOrders, totalRevenue, gamesSold, percentageSold };
   }, [orders]);
 };

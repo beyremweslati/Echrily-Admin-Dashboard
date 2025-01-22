@@ -184,8 +184,10 @@ const AddGames = () => {
           m="0px 0 0 0 "
           height="75vh"
           sx={{
+            overflowX: "auto",
             "& .MuiDataGrid-root": {
               border: "none",
+              minWidth: "1000px",
             },
             "& .MuiDataGrid-cell": {
               borderBottom: "none",

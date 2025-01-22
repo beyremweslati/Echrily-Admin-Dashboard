@@ -8,8 +8,16 @@ const Line = () => {
   return (
     <Box m="20px">
       <Header title="CHARTS" subtitle="Line Chart" />
-      <Box height="75vh" display="flex" width="100%">
-        <LineChart data={lineData} />
+      <Box
+        height="75vh"
+        display="flex"
+        width="100%"
+        overflow="auto"
+        overflowY="hidden"
+      >
+        <div style={{ width: "100%", minWidth: "800px" }}>
+          <LineChart data={lineData} />
+        </div>
       </Box>
     </Box>
   );

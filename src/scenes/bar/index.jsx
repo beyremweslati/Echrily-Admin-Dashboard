@@ -8,8 +8,16 @@ const Bar = () => {
   return (
     <Box m="20px">
       <Header title="CHARTS" subtitle="Bar Chart" />
-      <Box height="75vh" display="flex" width="100%">
-        <Box width="50%" height="100%">
+      <Box
+        height="75vh"
+        display="flex"
+        width="100%"
+        flexDirection={{
+          xs: "column",
+          md: "row",
+        }}
+      >
+        <Box width={{ md: "50%", xs: "100%" }} height="100%">
           <BarChart
             data={data}
             keyName="quantity"
@@ -17,7 +25,7 @@ const Bar = () => {
             legendX="Game"
           />
         </Box>
-        <Box width="50%" height="100%">
+        <Box width={{ md: "50%", xs: "100%" }} height="100%">
           <BarChart
             data={data}
             keyName="totalAmount"

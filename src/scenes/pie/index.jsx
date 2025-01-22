@@ -41,8 +41,10 @@ const Pie = () => {
   return (
     <Box m="20px">
       <Header title="CHARTS" subtitle="Pie Chart" />
-      <Box height="75vh" display="flex" width="100%">
-        <PieChart data={pieData} />
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <Box height="70vh" display="flex" width="80%">
+          <PieChart data={pieData} />
+        </Box>
       </Box>
     </Box>
   );
