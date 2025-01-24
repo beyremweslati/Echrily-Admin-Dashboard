@@ -18,21 +18,28 @@ import axios from "axios";
 const AddGames = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
   const [games, setGames] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+
   const [selectedGames, setSelectedGames] = useState([]);
   const [selectedGamesObjects, setSelectedGamesObjects] = useState([]);
+
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState("success");
+
   const [isLoading, setIsLoading] = useState(false);
-  const rawgKey = process.env.REACT_APP_RAWG_API_KEY;
-  const ITADKey = process.env.REACT_APP_ITA_API_KEY;
+
+  const token = localStorage.getItem("token");
   const fetchGames = async () => {
     try {
       const response = await axios.get("/api/admin/rawgGames", {
         params: {
           searchTerm: searchTerm,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
       });
       setGames(response.data);
@@ -65,6 +72,9 @@ const AddGames = () => {
               params: {
                 gameName: game.name,
               },
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             });
             const isadID = isadResponse.data.found
               ? isadResponse.data.game.id
@@ -84,9 +94,17 @@ const AddGames = () => {
           }
         })
       );
-      const res = await axios.post("/api/admin/add-games", {
-        games: finalGames,
-      });
+      const res = await axios.post(
+        "/api/admin/add-games",
+        {
+          games: finalGames,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (res.status === 201) {
         setMessage("Game(s) added successfully");
         setSeverity("success");

@@ -13,8 +13,10 @@
     "@nivo/line": "^0.88.0",
     "@nivo/pie": "^0.88.0",
     "axios": "^1.7.9",
+    "bcrypt": "^5.1.1",
     "cra-template": "1.2.0",
     "formik": "^2.4.6",
+    "jsonwebtoken": "^9.0.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-pro-sidebar": "^0.7.1",
@@ -47,7 +49,6 @@
     ]
   },
   "main": "index.js",
-  "devDependencies": {},
   "keywords": [],
   "author": "",
   "license": "ISC",

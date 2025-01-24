@@ -26,12 +26,20 @@ const Games = () => {
   const [severity, setSeverity] = useState("success");
   const [message, setMessage] = useState("");
 
+  const token = localStorage.getItem("token");
+
   const handleToggle = async () => {
     setIsLoading(true);
     const updatePromises = selectedGames.map(async (game) => {
       try {
         const res = await axios.patch(
-          `/api/admin/games/${game}/toggle-visibility`
+          `/api/admin/games/${game}/toggle-visibility`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
       } catch (error) {
         console.error(`Failed to update game ${game}:`, error.message);

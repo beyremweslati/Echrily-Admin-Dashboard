@@ -40,12 +40,21 @@ const Orders = () => {
   const [severity, setSeverity] = useState("success");
   const [message, setMessage] = useState("");
 
+  const token = localStorage.getItem("token");
   const updateStatusForSelected = async (status) => {
     const updatePromises = selectedOrders.map(async (orderId) => {
       try {
-        const response = await axios.post(`/api/admin/orders/${orderId}`, {
-          status: status,
-        });
+        const response = await axios.post(
+          `/api/admin/orders/${orderId}`,
+          {
+            status: status,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         if (response.status === 200) {
           return "success";
         } else {

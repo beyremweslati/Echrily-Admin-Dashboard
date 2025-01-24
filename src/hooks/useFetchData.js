@@ -6,10 +6,21 @@ const useFetchData = (url, config = {}) => {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get(url);
+      const token = localStorage.getItem("token");
+
+      const response = await axios.get(url, {
+        ...config,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setData(response.data);
     } catch (err) {
       console.error(err);
+      if (err.response?.status === 401) {
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+      }
     }
   }, [url]);
 

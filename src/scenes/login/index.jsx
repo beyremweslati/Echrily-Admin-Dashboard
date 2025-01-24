@@ -13,17 +13,17 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  //   const handleLogin = async (e) => {
-  //     e.preventDefault();
-  //     try {
-  //       const response = await axios.post("/api/auth/login", { email, password });
-  //       localStorage.setItem("token", response.data.token);
-  //       localStorage.setItem("user", JSON.stringify(response.data.user));
-  //       navigate("/dashboard");
-  //     } catch (error) {
-  //       setError("Invalid email or password");
-  //     }
-  //   };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/api/auth/login", { email, password });
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      navigate("/");
+    } catch (error) {
+      setError("Invalid email or password");
+    }
+  };
 
   return (
     <Box
@@ -66,6 +66,7 @@ const Login = () => {
                   "& fieldset": {
                     borderColor: colors.grey[100],
                   },
+
                   "&:hover fieldset": {
                     borderColor: colors.blueAccent[500],
                   },

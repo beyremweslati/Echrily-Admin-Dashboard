@@ -12,7 +12,11 @@ const BarChart = ({
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  if (!data || data.length === 0) {
+    return <div>No data available</div>;
+  }
   return (
     <ResponsiveBar
       data={data}
@@ -84,7 +88,7 @@ const BarChart = ({
       axisTop={null}
       axisRight={null}
       axisBottom={
-        useMediaQuery(theme.breakpoints.down("sm"))
+        isSmallScreen
           ? null
           : {
               tickSize: 5,

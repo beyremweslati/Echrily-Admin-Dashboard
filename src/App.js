@@ -13,6 +13,8 @@ import Pie from "./scenes/pie";
 import Line from "./scenes/line";
 import Login from "./scenes/login";
 import { useState } from "react";
+import ProtectedRoute from "./components/ProtectedRoute";
+
 function App() {
   const [theme, colorMode] = useMode();
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -46,14 +48,15 @@ function App() {
             {!isLoginPage && <Topbar />}
             <Routes>
               <Route path="/login" element={<Login />} />
-
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/manage-games" element={<Games />} />
-              <Route path="/orders" element={<Orders />} />
-              <Route path="/add-games" element={<AddGames />} />
-              <Route path="/bar" element={<Bar />} />
-              <Route path="/pie" element={<Pie />} />
-              <Route path="/line" element={<Line />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/manage-games" element={<Games />} />
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/add-games" element={<AddGames />} />
+                <Route path="/bar" element={<Bar />} />
+                <Route path="/pie" element={<Pie />} />
+                <Route path="/line" element={<Line />} />
+              </Route>
             </Routes>
           </main>
         </div>

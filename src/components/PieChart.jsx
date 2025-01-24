@@ -5,7 +5,10 @@ import { ResponsivePie } from "@nivo/pie";
 const PieChart = ({ isDashboard = false, data }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
+  const isLargeScreen = useMediaQuery(theme.breakpoints.down("lg"));
+  if (!data || data.length === 0) {
+    return <div>No data available</div>;
+  }
   return (
     <ResponsivePie
       data={data}
@@ -66,7 +69,7 @@ const PieChart = ({ isDashboard = false, data }) => {
         modifiers: [["darker", 2]],
       }}
       legends={
-        useMediaQuery(theme.breakpoints.down("lg"))
+        isLargeScreen
           ? [
               {
                 anchor: "bottom",
