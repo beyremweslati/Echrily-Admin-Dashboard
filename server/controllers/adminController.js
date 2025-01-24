@@ -165,7 +165,11 @@ const addGames = async (req, res) => {
         },
       }
     );
-    res.status(200).json(response.data);
+    if (response.status === 201) {
+      res.status(201).json(response.data);
+    } else {
+      res.status(200).json(response.data);
+    }
   } catch (error) {
     console.error("Error adding games:", error.message);
     res.status(500).json({ error: "Failed to add games" });
