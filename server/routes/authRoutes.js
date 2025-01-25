@@ -27,7 +27,10 @@ router.post("/login", async (req, res) => {
     );
     res
       .status(200)
-      .json({ token, user: { email: user.email, role: user.role } });
+      .json({
+        token,
+        user: { name: user.name, email: user.email, role: user.role },
+      });
   } catch (error) {
     console.error("Login Error: ", error);
     res.status(500).json({ error: "Internal server error" });

@@ -18,6 +18,8 @@ import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
+
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -39,6 +41,7 @@ const Sidebar = ({ toggleSidebar, isCollapsed }) => {
   const colors = tokens(theme.palette.mode);
   const isSmallScreen = useMediaQuery("(max-width: 800px)");
 
+  const user = JSON.parse(localStorage.getItem("user"));
   const [selected, setSelected] = useState("Dashboard");
   return (
     <Box
@@ -105,10 +108,10 @@ const Sidebar = ({ toggleSidebar, isCollapsed }) => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Ahmed Oues
+                  {user.name}
                 </Typography>
                 <Typography variant="h5" color={colors.blueAccent[500]}>
-                  Founder
+                  {user.role}
                 </Typography>
               </Box>
             </Box>
@@ -151,6 +154,21 @@ const Sidebar = ({ toggleSidebar, isCollapsed }) => {
               selected={selected}
               setSelected={setSelected}
             />
+            <Typography
+              variant="h6"
+              color={colors.grey[600]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Forms
+            </Typography>
+            <Item
+              title="Add Users"
+              to="/add-users"
+              icon={<PersonAddAltOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
             <Typography
               variant="h6"
               color={colors.grey[600]}
