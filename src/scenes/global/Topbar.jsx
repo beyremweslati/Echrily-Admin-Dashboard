@@ -35,7 +35,9 @@ const Topbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const handleAccountClick = () => {
+    navigate("/account-detail");
+  };
   const handleLogOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -106,7 +108,12 @@ const Topbar = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={() => {
+            handleAccountClick();
+            handleClose();
+          }}
+        >
           <ListItemIcon>
             <AccountCircleIcon />
           </ListItemIcon>

@@ -13,6 +13,7 @@ import Bar from "./scenes/bar";
 import Pie from "./scenes/pie";
 import Line from "./scenes/line";
 import Login from "./scenes/login";
+import AccountDetails from "./scenes/accountDetails";
 import { useState } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -58,6 +59,7 @@ function App() {
                 <Route path="/bar" element={<Bar />} />
                 <Route path="/pie" element={<Pie />} />
                 <Route path="/line" element={<Line />} />
+                <Route path="/account-detail" element={<AccountDetails />} />
               </Route>
             </Routes>
           </main>
