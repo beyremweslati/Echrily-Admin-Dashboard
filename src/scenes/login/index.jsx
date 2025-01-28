@@ -66,8 +66,10 @@ const Login = () => {
                   "& fieldset": {
                     borderColor: colors.grey[100],
                   },
-
                   "&:hover fieldset": {
+                    borderColor: colors.blueAccent[500],
+                  },
+                  "&.Mui-focused fieldset": {
                     borderColor: colors.blueAccent[500],
                   },
                 },
@@ -95,6 +97,9 @@ const Login = () => {
                     borderColor: colors.grey[100],
                   },
                   "&:hover fieldset": {
+                    borderColor: colors.blueAccent[500],
+                  },
+                  "&.Mui-focused fieldset": {
                     borderColor: colors.blueAccent[500],
                   },
                 },

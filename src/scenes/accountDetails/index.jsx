@@ -6,10 +6,14 @@ import {
   Typography,
   TextField,
   Button,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import Header from "../../components/Header";
 import { useState } from "react";
 import { tokens } from "../../theme";
+import axios from "axios";
+
 const AccountDetails = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -17,7 +21,67 @@ const AccountDetails = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+  const [lengthError, setLengthError] = useState(false);
 
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("success");
+
+  const handleChangePassword = async () => {
+    if (newPassword !== confirmPassword) {
+      setSeverity("error");
+      setMessage("Passwords do not match");
+      setOpenSnackbar(true);
+
+      setPasswordError(true);
+      return;
+    } else {
+      setPasswordError(false);
+    }
+
+    if (newPassword.length < 8) {
+      setSeverity("error");
+      setMessage("Password must be 8 characters long");
+      setOpenSnackbar(true);
+
+      setLengthError(true);
+      return;
+    } else {
+      setLengthError(false);
+    }
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await axios.post(
+        "/api/auth/change-password",
+        {
+          currentPassword,
+          newPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        setSeverity("success");
+        setMessage("Password Changed successfully");
+        setOpenSnackbar(true);
+
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+        setPasswordError(false);
+        setLengthError(false);
+      }
+    } catch (error) {
+      setMessage(error.response?.data?.error || "Failed to change Password");
+      setSeverity("error");
+      setOpenSnackbar(true);
+    }
+  };
   return (
     <Box m="20px">
       <Header
@@ -67,7 +131,6 @@ const AccountDetails = () => {
         display="flex"
         flexDirection="column"
         gap="20px"
-        maxWidth="70%"
         mx="auto"
         p="20px"
         backgroundColor={colors.primary[400]}
@@ -88,6 +151,7 @@ const AccountDetails = () => {
             "& .MuiOutlinedInput-root": {
               "& fieldset": { borderColor: colors.grey[100] },
               "&:hover fieldset": { borderColor: colors.blueAccent[500] },
+              "&.Mui-focused fieldset": { borderColor: colors.blueAccent[500] },
             },
           }}
         />
@@ -96,37 +160,55 @@ const AccountDetails = () => {
           type="password"
           label="New Password"
           value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
+          onChange={(e) => {
+            setNewPassword(e.target.value);
+            setLengthError(e.target.value.length < 8);
+          }}
           required
           sx={{
             "& .MuiInputLabel-root": { color: colors.grey[100] },
             "& .MuiOutlinedInput-root": {
               "& fieldset": { borderColor: colors.grey[100] },
               "&:hover fieldset": { borderColor: colors.blueAccent[500] },
+              "&.Mui-focused fieldset": { borderColor: colors.blueAccent[500] },
             },
           }}
+          error={newPassword !== "" && lengthError}
+          helperText={
+            newPassword && lengthError
+              ? "Password must be at least 8 characters long"
+              : ""
+          }
         />
         <TextField
           fullWidth
           type="password"
           label="Confirm New Password"
           value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          onChange={(e) => {
+            setConfirmPassword(e.target.value);
+            setPasswordError(e.target.value !== newPassword);
+          }}
           required
           sx={{
             "& .MuiInputLabel-root": { color: colors.grey[100] },
             "& .MuiOutlinedInput-root": {
               "& fieldset": { borderColor: colors.grey[100] },
               "&:hover fieldset": { borderColor: colors.blueAccent[500] },
+              "&.Mui-focused fieldset": { borderColor: colors.blueAccent[500] },
             },
           }}
+          error={confirmPassword !== "" && passwordError}
+          helperText={
+            confirmPassword && passwordError ? "Password does not match" : ""
+          }
         />
         <Button
-          type="submit"
           fullWidth
+          onClick={handleChangePassword}
           sx={{
             backgroundColor: colors.blueAccent[500],
-            color: colors.grey[100],
+            color: "white",
             fontSize: "14px",
             fontWeight: "bold",
             padding: "10px 20px",
@@ -138,6 +220,24 @@ const AccountDetails = () => {
           Change Password
         </Button>
       </Box>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity={severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
