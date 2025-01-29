@@ -8,6 +8,7 @@ import {
   Button,
   Snackbar,
   Alert,
+  useMediaQuery,
 } from "@mui/material";
 import Header from "../../components/Header";
 import { useState } from "react";
@@ -23,6 +24,8 @@ const AccountDetails = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const [lengthError, setLengthError] = useState(false);
+
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [message, setMessage] = useState("");
@@ -110,19 +113,27 @@ const AccountDetails = () => {
           <Avatar
             alt={user.name}
             sx={{
-              width: 140,
-              fontSize: 64,
-              height: 140,
+              width: { xs: 100, sm: 140 },
+              fontSize: { xs: 50, sm: 64 },
+              height: { xs: 100, sm: 140 },
               backgroundColor: colors.blueAccent[500],
             }}
           >
             {Array.from(user.name)[0]}
           </Avatar>
         )}
-        <Typography variant="h1" fontWeight="bold" color={colors.grey[100]}>
+        <Typography
+          variant={isSmallScreen ? "h2" : "h1"}
+          fontWeight="bold"
+          color={colors.grey[100]}
+          textAlign="center"
+        >
           {user.name}
         </Typography>
-        <Typography variant="h4" color={colors.blueAccent[500]}>
+        <Typography
+          variant={isSmallScreen ? "h5" : "h4"}
+          color={colors.blueAccent[500]}
+        >
           {user.email}
         </Typography>
       </Box>

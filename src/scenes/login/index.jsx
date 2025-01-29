@@ -1,4 +1,11 @@
-import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  useTheme,
+  CircularProgress,
+} from "@mui/material";
 import { tokens } from "../../theme";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,15 +20,20 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await axios.post("/api/auth/login", { email, password });
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
+      setIsLoading(false);
       navigate("/");
     } catch (error) {
       setError("Invalid email or password");
+      setIsLoading(false);
     }
   };
 
@@ -122,8 +134,14 @@ const Login = () => {
           <Button
             fullWidth
             type="submit"
+            disabled={isLoading}
+            startIcon={
+              isLoading ? <CircularProgress size={24} color="inherit" /> : null
+            }
             sx={{
-              backgroundColor: colors.blueAccent[500],
+              backgroundColor: !isLoading
+                ? colors.blueAccent[500]
+                : colors.grey[600],
               color: colors.grey[100],
               fontSize: "14px",
               fontWeight: "bold",
