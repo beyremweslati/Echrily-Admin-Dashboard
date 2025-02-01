@@ -19,6 +19,7 @@ const AccountDetails = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const user = JSON.parse(localStorage.getItem("user"));
+
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -55,10 +56,11 @@ const AccountDetails = () => {
     }
     try {
       const token = localStorage.getItem("token");
-
+      const email = user.email;
       const response = await axios.post(
         "/api/auth/change-password",
         {
+          email,
           currentPassword,
           newPassword,
         },
