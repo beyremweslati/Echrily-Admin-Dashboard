@@ -36,9 +36,9 @@ const login = async (req, res) => {
 };
 
 const changePassword = async (req, res) => {
-  const { currentPassword, newPassword } = req.body;
+  const { email, currentPassword, newPassword } = req.body;
   try {
-    const user = await User.findOne(req.user._id);
+    const user = await User.findOne({ email });
     const isPasswordValid = await bcrypt.compare(
       currentPassword,
       user.password

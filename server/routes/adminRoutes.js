@@ -22,5 +22,5 @@ router.patch(
 );
 router.post("/orders/:id", authenticate, adminController.updateOrderStatus);
 router.post("/add-games", authenticate, adminController.addGames);
-
+router.post("/add-user", authenticate, adminController.addUser);
 module.exports = router;
