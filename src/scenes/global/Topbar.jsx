@@ -50,15 +50,13 @@ const Topbar = () => {
       p={2}
       backgroundColor={colors.primary[500]}
     >
-      <Box
-        display="flex"
-        backgroundColor={colors.primary[300]}
-        borderRadius="3px"
-      >
-        <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
-        <IconButton type="button" sx={{ p: 1 }}>
-          <SearchIcon />
-        </IconButton>
+      <Box display="flex">
+        <Box
+          component="img"
+          height="35px"
+          src="../../assets/logo/Echrily_LOGO.png"
+          alt="Logo"
+        ></Box>
       </Box>
 
       <Box display="flex">

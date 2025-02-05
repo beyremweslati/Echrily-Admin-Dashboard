@@ -7,6 +7,7 @@ import {
   Typography,
   useTheme,
   useMediaQuery,
+  Avatar,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { tokens } from "../../theme";
@@ -93,13 +94,29 @@ const Sidebar = ({ toggleSidebar, isCollapsed }) => {
           {!isCollapsed && (
             <Box mb="25px">
               <Box display="flex" justifyContent="center" alignItems="center">
-                <img
-                  alt="profile-user"
-                  width="100px"
-                  height="100px"
-                  src="../../assets/user.png"
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
-                />
+                {user.img ? (
+                  <Avatar
+                    alt={user.name}
+                    src={user.img}
+                    sx={{
+                      width: 100,
+                      height: 100,
+                      backgroundColor: colors.blueAccent[500],
+                    }}
+                  />
+                ) : (
+                  <Avatar
+                    alt={user.name}
+                    sx={{
+                      width: 100,
+                      fontSize: 50,
+                      height: 100,
+                      backgroundColor: colors.blueAccent[500],
+                    }}
+                  >
+                    {Array.from(user.name)[0]}
+                  </Avatar>
+                )}
               </Box>
               <Box textAlign="center">
                 <Typography

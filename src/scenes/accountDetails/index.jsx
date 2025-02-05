@@ -100,7 +100,7 @@ const AccountDetails = () => {
         gap="20px"
         mb="40px"
       >
-        {user.img && (
+        {user.img ? (
           <Avatar
             alt={user.name}
             src={user.img}
@@ -110,8 +110,7 @@ const AccountDetails = () => {
               backgroundColor: colors.blueAccent[500],
             }}
           />
-        )}
-        {!user.img && (
+        ) : (
           <Avatar
             alt={user.name}
             sx={{
